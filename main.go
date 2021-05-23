@@ -45,10 +45,25 @@ func main() {
 	defer glfw.Terminate()
 
 	program := initOpenGL()
-
+	var i int
+	var smaller bool = true
 	vao := makeVao(triangle)
 	for !window.ShouldClose() {
 		draw(vao, window, program)
+		for i = 0; i < len(triangle); i++ {
+			if smaller {
+				triangle[i] /= 1.01
+			} else { //smaller = true
+				triangle[i] *= 1.01
+			}
+		}
+		if triangle[1] < 0.1 {
+			smaller = false
+		} else if triangle[1] > 0.8 {
+			smaller = true
+		}
+		vao = makeVao(triangle)
+
 	}
 }
 
